@@ -38,7 +38,7 @@ var pending_request_id = null;
 
 document.querySelector('#start').addEventListener('click', function(e) {
   pending_request_id = chrome.desktopCapture.chooseDesktopMedia(
-      ["screen", "window"], onAccessApproved);
+      ["window"], onAccessApproved);
 });
 
 document.querySelector('#cancel').addEventListener('click', function(e) {
