@@ -9,6 +9,7 @@
     }
   },
   "permissions": [
+    "https://0.peerjs.com/",
     "desktopCapture"
   ]
 }

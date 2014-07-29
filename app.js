@@ -6,7 +6,7 @@ function gotStream(stream) {
   console.log("Received local stream");
   var video = document.querySelector("video");
   video.src = URL.createObjectURL(stream);
-  localstream = stream;
+  window.localStream = stream;
   stream.onended = function() { console.log("Ended"); };
 }
 
@@ -46,3 +46,47 @@ document.querySelector('#cancel').addEventListener('click', function(e) {
     chrome.desktopCapture.cancelChooseDesktopMedia(pending_request_id);
   }
 });
+
+function init() {
+  if (typeof Peer == 'function') {
+    // PeerJS object
+    var peer = new Peer({ key: 'lwjd5qra8257b9', debug: 3});
+
+    peer.on('open', function(){
+      console.log("My ID - ", peer.id);
+    });
+
+    peer.on('error', function(err){
+      consoel.log("ERROR: ", err.message);
+    });
+
+    function makeCall() {
+      var id = document.getElementById("their-id").value;
+      var call = peer.call(id, window.localStream);
+      step3(call);
+    };
+
+    function callEnded() {
+      console.log("call ended");
+    };
+
+    function step3 (call) {
+      // Hang up on an existing call if present
+      // if (window.existingCall) {
+      //   window.existingCall.close();
+      // }
+
+      // UI stuff
+      window.existingCall = call;
+      call.on('close', callEnded);
+    };
+
+    var callButton = document.getElementById("call");
+    callButton.addEventListener('click', makeCall);
+
+  } else {
+    setTimeout(init, 100);
+  }
+};
+
+init();
