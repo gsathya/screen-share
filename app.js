@@ -37,8 +37,17 @@ function onAccessApproved(id) {
 var pending_request_id = null;
 
 document.querySelector('#start').addEventListener('click', function(e) {
-  pending_request_id = chrome.desktopCapture.chooseDesktopMedia(
-      ["window"], onAccessApproved);
+  chrome.tabCapture.capture({
+    video: true,
+    videoConstraints: {
+      mandatory: {
+        googLeakyBucket: true,
+        maxWidth: window.screen.width,
+        maxHeight: window.screen.height,
+        maxFrameRate: 60
+      }
+    }
+  }, gotStream);
 });
 
 document.querySelector('#cancel').addEventListener('click', function(e) {
