@@ -5,5 +5,3 @@
     * Launch extension
 
 * Based on the Chrome [desktop share extension](https://developer.chrome.com/extensions/samples#desktop-capture-example)
-
-

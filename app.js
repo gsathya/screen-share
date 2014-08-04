@@ -80,12 +80,6 @@ function init() {
     };
 
     function step3 (call) {
-      // Hang up on an existing call if present
-      // if (window.existingCall) {
-      //   window.existingCall.close();
-      // }
-
-      // UI stuff
       window.existingCall = call;
       call.on('close', callEnded);
     };
